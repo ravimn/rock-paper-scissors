@@ -1,9 +1,6 @@
-console.log("Hello World")
-// getComputerChoice();
-// getHumanChoice();
-
 let humanScore = 0;
 let computerScore = 0;
+let round = 0;
 
 const messageMap = new Map();
 messageMap.set('paperrock', "You Win! Paper beats Rock");
@@ -21,18 +18,52 @@ resultMap.set('paperscissors', 0);
 resultMap.set('rockscissors', 1);
 resultMap.set('scissorsrock', 0);
 
-playGame();
+document.getElementById("finalDiv").style.visibility = false;
 
-function playGame() {
-    for (i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
+// playGame();
+
+function playGame(humanSelection) {
+    //const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+
+    playRound(humanSelection, computerSelection);
+    console.log( "Human Score is [" + humanScore + "] Computer Score is [" + computerScore + "]");    
     
-        playRound(humanSelection, computerSelection);
-        console.log( "Human Score is [" + humanScore + "] Computer Score is [" + computerScore + "]");     
-    }
-    console.log( "Final Score - Human [" + humanScore + "] Computer [" + computerScore + "]"); 
+    resultDiv = document.getElementById("res");
+    pElement = document.createElement("div");
+    pElement.classList.add('result');
+    pElement.textContent = 'Human Selection - ' + humanSelection + ' - Computer Selection - ' + computerSelection;
+    resultDiv.appendChild(pElement);
 
+    scoreDiv = document.getElementById('score');
+    scoreDiv.textContent = 'Player: ' + humanScore + ' | Computer :' + computerScore;
+    round++;
+    
+    finalResult = '';
+    if (round === 5) {
+        if (humanScore === computerScore) {
+            finalResult = "Match Drawn";
+        } else if (humanScore > computerScore) {
+            finalResult = "Human Wins!!!!";
+        } else {
+            finalResult = "Computer Wins!!!!";
+        }
+        finalDiv = document.getElementById('final');
+        finalDiv.textContent = finalResult;
+        
+        document.getElementById("rock").disabled = true;
+        document.getElementById("paper").disabled = true;
+        document.getElementById("scissors").disabled = true;
+
+        document.getElementById("finalDiv").style.visibility = true;
+    }
+
+
+
+}
+
+function createResult(humanSelection) {
+    document.createElement(div)
 }
 
 
@@ -82,15 +113,15 @@ function getComputerChoice() {
 
 }
 
-function getHumanChoice() {
-    while(true) {
-        let symbol = prompt("What is your choice - Rock, Paper or Scissors?");
-        symbol = symbol.toLowerCase();
-        console.log("Human selected choice is " + symbol);
+// function getHumanChoice() {
+//     while(true) {
+//         let symbol = prompt("What is your choice - Rock, Paper or Scissors?");
+//         symbol = symbol.toLowerCase();
+//         console.log("Human selected choice is " + symbol);
     
-        if (symbol === "rock" || symbol === "paper" || symbol === "scissors") {
-            return symbol;
-        }
-        console.log("Invalid choice.  Ask user to write the choice back");
-    }
-}
+//         if (symbol === "rock" || symbol === "paper" || symbol === "scissors") {
+//             return symbol;
+//         }
+//         console.log("Invalid choice.  Ask user to write the choice back");
+//     }
+// }
